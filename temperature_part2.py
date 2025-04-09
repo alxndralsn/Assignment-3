@@ -1,7 +1,7 @@
 # Alexandra Lesan
 # 2433764
 
-# PART 1
+# PART 1 for previous functions
 '''
 Write a function called toCelsius that takes a temperature in
 Fahrenheit and returns the corresponding temperature in Celsius rounded to 2 decimal places.
@@ -92,6 +92,8 @@ def avgTempMonth(d, month):
     print(month_dict)
     return month_dict[month]
 
+
+
 # PART 2
 """
 Write a function belowFreezing that takes a dictionary (of same format as you read from the
@@ -99,13 +101,11 @@ data.txt file) and returns all months that have had a temperature value below fr
 some year. On the given data, the output should be the months of January, February, March and
 December. 
 """
-def belowFreezing(d):
-    months = set()
-    for year in d:
-        for temp in d[year]:
-            if temp < 0:
-                months.add(temp)
-    return months
+def belowFreezing(d, year):
+    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    for i in range(len(d[year])):
+        if d[year][i] < 0:
+            print(months[i])
 
 """
 In your main program you are to write to a file called data_celsius.txt. Create this file
@@ -120,12 +120,13 @@ same as that of data.txt.
 print(temp_dict)
 output_file = open('data_celsius.txt', 'w')
 input_file = open('data.txt', 'r')
+input_file.seek(0)
 for i in range(4):
     output_file.write(input_file.readline())
 input_file.close()
 for year in temp_dict:
     output_file.write(f'{year:>4}')
     for temp in temp_dict[year]:
-        output_file.write(f'{temp:>7.2f}')
+        output_file.write(f'{temp:>8.2f}')
     output_file.write('\n')
 output_file.close()
