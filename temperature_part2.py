@@ -48,7 +48,7 @@ def avgTempYear(d, year):
     try:
         avg = round(sum(d[year])/len(d[year]), 2)
         return avg
-    except:
+    except KeyError:
         print("This year has not been found in the dictionary")
 
 '''
@@ -63,7 +63,6 @@ def topThreeYears(d):
     s = set()
     for year in d:
         s.add(avgTempYear(d, year))
-    print(s)
     while len(l) != 3:
         for avg in s:
             if avg == max(s):
@@ -82,15 +81,15 @@ For example: month_dict = {'JAN': 1, 'FEB': 2, 'MAR': 3, etc.}
 """
 
 def avgTempMonth(d, month):
-    month_dict = {}
-    months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-    for i in range(len(months)):
-        temps_month = []
-        for year in d:
-            temps_month.append(d[year][i])
-        month_dict[months[i]] = round(sum(temps_month)/len(temps_month), 2)
-    print(month_dict)
-    return month_dict[month]
+    months_dict = {'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4, 'MAY': 5, 'JUN': 6,\
+                    'JUL': 7, 'AUG': 8, 'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12}
+    month_i = months_dict[month]
+    total = 0
+    count = 0
+    for year in d:
+        total += d[year][month_i-1]
+        count += 1
+    return round(total/count, 2)
 
 
 
@@ -103,7 +102,7 @@ December.
 """
 def belowFreezing(d, year):
     months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    for i in range(len(d[year])):
+    for i in range(12): # could also be range(len(d[year])), but that's 12
         if d[year][i] < 0:
             print(months[i])
 
@@ -117,7 +116,6 @@ data to your file, make sure the display format and spacing in data_celsius.txt 
 same as that of data.txt. 
 """
 
-print(temp_dict)
 output_file = open('data_celsius.txt', 'w')
 input_file = open('data.txt', 'r')
 input_file.seek(0)
